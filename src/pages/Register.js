@@ -38,70 +38,110 @@ function Register() {
     }
 
     return (
-        <div className="SignUp-Container">
-            <h1>Registrate</h1>                                                                                              
-            <form>
-                <label htmlFor="name">
-                    Nombre
-                </label>
-                <input
-                    type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}  
-                    required                                    
-                    placeholder="Nombre"                                
-                />
+        <>
+            <div className="container box">
+                <h1 className="title is-2">Registrate</h1>                                                                                              
+                <form>
+                    <div className="field">
+                        <label className="label" htmlFor="name">
+                            Nombre
+                        </label>
+                        <div className="control has-icons-left">
+                            <input
+                                className="input"
+                                type="text"
+                                id="name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}  
+                                required                                    
+                                placeholder="Nombre"                                
+                            />
+                            <span className="icon is-small is-left">
+                                <i className="fas fa-user"></i>
+                            </span>
+                        </div>
+                    </div>
+                   
+                    <div className="field">
+                        <label className="label" htmlFor="lastName">
+                            Apellidos
+                        </label>
+                        <div className="control has-icons-left">
+                            <input
+                                className="input"
+                                type="text"
+                                id="lastName"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}  
+                                required                                    
+                                placeholder="Apellido"                                
+                            />
+                            <span className="icon is-small is-left">
+                                <i className="fas fa-user"></i>
+                            </span>
+                        </div>
+                    </div>
+                   
+                    <div className="field">
+                        <label htmlFor="email-address">
+                            Dirección de Correo Electronico
+                        </label>
+                        <div className="control has-icons-left">
+                            <input
+                            className="input"
+                                type="email"
+                                id="email-address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}  
+                                required                                    
+                                placeholder="Correo Electronico"                                
+                            />
+                            <span className="icon is-small is-left">
+                                <i className="fas fa-envelope"></i>
+                            </span>
+                        </div>
+                    </div>
+                    
 
-                <label htmlFor="lastName">
-                    Apellidos
-                </label>
-                <input
-                    type="text"
-                    id="lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}  
-                    required                                    
-                    placeholder="Apellido"                                
-                />
-
-                <label htmlFor="email-address">
-                    Dirección de Correo Electronico
-                </label>
-                <input
-                    type="email"
-                    id="email-address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}  
-                    required                                    
-                    placeholder="Correo Electronico"                                
-                />
-
-                <label htmlFor="password">
-                    Contraseña
-                </label>
-                <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)} 
-                    required                                 
-                    placeholder="Contraseña"              
-                />                                            
-                
-                <input
-                    type="submit" 
-                    onClick={onSubmit}
-                    value="Registrarse"                        
-                />                                
-            </form>
-            <p>
-                Ya tienes una cuenta?{' '}
-                <Link to="/login" >
-                    Inicia Sesión
-                </Link>
-            </p>                   
-        </div>
+                    <div className="field">
+                        <label className="label" htmlFor="password">
+                            Contraseña
+                        </label>
+                        <div className='control has-icons-left'>
+                            <input
+                            className="input" 
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)} 
+                            required                                 
+                            placeholder="Contraseña"              
+                            />
+                            <span className="icon is-small is-left">
+                                <i className="fas fa-key"></i>
+                            </span>      
+                        </div>
+                    </div>                                            
+                    
+                    <div className="field">
+                            <div className="control">
+                                <input
+                                className="button is-success"
+                                type="submit" 
+                                onClick={onSubmit}
+                                value="Registrarse"                        
+                                />
+                            </div>
+                        </div>                                
+                </form>
+                <p>
+                    Ya tienes una cuenta?{' '}
+                    <Link to="/login" >
+                        Inicia Sesión
+                    </Link>
+                </p>                   
+            </div>
+        </>
     )
 }
 

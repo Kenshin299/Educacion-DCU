@@ -1,5 +1,4 @@
 import 'bulma/css/bulma.min.css';
-import 'fontawesome-free'
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase';
 import { useNavigate, Link } from 'react-router-dom';
@@ -48,7 +47,7 @@ function Login() {
                                 placeholder="Correo Electronico"                                
                                 />
                                 <span className="icon is-small is-left">
-                                    <i className="fas fa-user"></i>
+                                    <i className="fas fa-envelope"></i>
                                 </span>
                             </div>
                         </div>

@@ -1,8 +1,9 @@
+import StudentList from "../components/StudentList";
 
 function MainPage() {
     return (
-        <div>
-            <h1>Se vienen cositas</h1>
+        <div className="container hero is-halfheight">
+            <StudentList />
         </div>
     )
 }

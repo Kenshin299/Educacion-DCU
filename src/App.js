@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -34,6 +35,7 @@ function App() {
               <Route path='/login' element={<Login />} />
               <Route path='/signup' element={<Register />} />
           </Routes>
+          <Footer />
       </BrowserRouter>
     </div>
   );

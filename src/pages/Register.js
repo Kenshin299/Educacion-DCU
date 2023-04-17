@@ -61,7 +61,7 @@ function Register() {
                             </span>
                         </div>
                     </div>
-                   
+                
                     <div className="field">
                         <label className="label" htmlFor="lastName">
                             Apellidos
@@ -81,7 +81,7 @@ function Register() {
                             </span>
                         </div>
                     </div>
-                   
+                
                     <div className="field">
                         <label htmlFor="email-address">
                             Dirección de Correo Electronico

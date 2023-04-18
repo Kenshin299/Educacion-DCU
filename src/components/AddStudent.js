@@ -1,7 +1,8 @@
 import StudentList from "./StudentList";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
-import {db} from '../Firebase';
+import { db, storage } from '../Firebase';
+import { ref, uploadBytesResumable } from "firebase/storage";
 
 function AddStudent() {
     const [name, setName] = useState("");
@@ -9,8 +10,8 @@ function AddStudent() {
     const [email, setEmail] = useState("");
     const [tel, setTel] = useState("");
     const [regisNum, setRegisNum] = useState("");
-    const [foto, setFoto] = useState("");
-    const [fotoName, setFotoName] = useState("");
+    const [foto, setFoto] = useState([]);
+    const [percent, setPercent] = useState(0);
     const [isSent, setIsSent] = useState(false);
     
     const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
@@ -19,6 +20,31 @@ function AddStudent() {
     // const handleTitleChange = (e) => {
     //     setPostTitle(e.target.value);
     // };
+
+    const storageRef = ref(storage, `/images/${foto.name}`);
+
+    const handleFoto = (e) => {
+        setFoto(e.target.files[0]);
+        let fileName = "";
+        const fileInput = document.getElementById('foto');
+        if (fileInput.files.length > 0) {
+            fileName = fileInput.files[0].name;
+        }
+        document.getElementById('file-name').textContent = fileName;
+    };
+
+    const handlePhotoUpload = async () => {
+        const uploadTask = uploadBytesResumable(storageRef, foto);
+        uploadTask.on('state_changed',  (snapshot) => {
+            setPercent((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        });
+        console.log(foto.name + ' uploaded');
+    };
+
+    const resetBar = () => {
+        document.getElementById('file-name').textContent = "Vacio";
+        setPercent(0);
+    }
 
     const addNewStudent = async (e) => {
         e.preventDefault();
@@ -29,27 +55,25 @@ function AddStudent() {
             tel: tel,
             regisNum: regisNum,
             created: date,
+            photo: foto.name
         }).then(() => {
-            document.querySelector("#Form").reset();
+            handlePhotoUpload();
+            setName("");
+            setLastName("");
+            setEmail("");
+            setTel("");
+            setRegisNum("");
+            console.log(foto);
             setIsSent(prevCheck => !prevCheck);
-        })
+            setTimeout(resetBar, 1000);
+        });
     };
-
-    const handleFoto = (e) => {
-        setFoto(e.target.value);
-        let fileName = "";
-        const fileInput = document.getElementById('foto');
-        if (fileInput.files.length > 0) {
-            fileName = fileInput.files[0].name;
-        }
-        document.getElementById('file-name').textContent = fileName;
-    }
     
     return (
         <>
             <div className="container box">
                 <h2 className="title is-2">Agregar Estudiante</h2>
-                <form id="Form" onSubmit={addNewStudent}>
+                <form id="AddStudentForm" onSubmit={addNewStudent}>
                     <div className="field">
                         <label className="label" htmlFor="name">
                             Nombre
@@ -174,6 +198,17 @@ function AddStudent() {
                         </label>                            
                     </div>
 
+                    {
+                        percent > 0 ? (
+                            <div className="container">
+                                <progress className="progress is-info" value={percent} max="100">{percent}</progress>
+                            </div>
+                        ) : (
+                            <>
+                            </>
+                        )
+                    }
+                
                     <div className="field is-grouped is-grouped-right">
                         <div className="control">
                             <input

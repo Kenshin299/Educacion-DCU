@@ -17,7 +17,7 @@ function App() {
           const uid = user.uid;
           setIsAuth(true);
           // ...
-          console.log("uid", uid)
+          // console.log("uid", uid)
         } else {
           setIsAuth(false);
           console.log("user is logged out")

@@ -1,47 +1,43 @@
-import { useNavigate ,Link } from "react-router-dom";
-import { useState } from 'react';
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from '../Firebase';
+import StudentList from "./StudentList";
+import React, {useState} from "react";
+import { collection, addDoc } from "firebase/firestore";
+import {db} from '../Firebase';
 
+function AddStudent(props) {
+    const [name, setName]= useState("");
+    const [lastName, setLastName]= useState("");
+    const [email, setEmail]= useState("");
+    const [tel, setTel]= useState("");
+    const [regisNum, setRegisNum]= useState("");
+    const [isSent, setIsSent] = useState(false);
+    
+    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    let date = new Date().toLocaleDateString('es-ES', options);
 
-function Register() {
-    const navigate = useNavigate();
+    // const handleTitleChange = (e) => {
+    //     setPostTitle(e.target.value);
+    // };
 
-    const [name, setName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-    const onSubmit = async (e) => {
+    const addNewStudent = async (e) => {
         e.preventDefault();
-       
-        await createUserWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-              // Signed in
-              const user = userCredential.user;
-              updateProfile(user, {
-                displayName: `${name} ${lastName}`
-              }).then(() => {
-                //
-              }).catch((error) => {
-                console.log(error);
-              });
-
-              navigate('/login')
-          })
-          .catch((error) => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              console.log(errorCode, errorMessage);
-              alert("No se pudo crear su nueva cuenta: " + errorMessage);
-          });
-    }
-
+        const sendPost = await addDoc(collection(db, 'estudiantes'), {
+            name: name,
+            lastName: lastName,
+            email: email,
+            tel: tel,
+            regisNum: regisNum,
+            created: date,
+        }).then(() => {
+            document.querySelector("#Form").reset();
+            setIsSent(prevCheck => !prevCheck);
+        })
+    };
+    
     return (
         <>
             <div className="container box">
-                <h1 className="title is-2">Registrate</h1>                                                                                              
-                <form>
+                <h2 className="title is-2">Agregar Estudiante</h2>
+                <form id="Form" onSubmit={addNewStudent}>
                     <div className="field">
                         <label className="label" htmlFor="name">
                             Nombre
@@ -61,7 +57,7 @@ function Register() {
                             </span>
                         </div>
                     </div>
-                
+
                     <div className="field">
                         <label className="label" htmlFor="lastName">
                             Apellidos
@@ -74,21 +70,21 @@ function Register() {
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}  
                                 required                                    
-                                placeholder="Apellido"                                
+                                placeholder="Apellidos"                                
                             />
                             <span className="icon is-small is-left">
                                 <i className="fas fa-user"></i>
                             </span>
                         </div>
                     </div>
-                
+
                     <div className="field">
-                        <label htmlFor="email-address">
+                        <label className="label" htmlFor="email-address">
                             Dirección de Correo Electronico
                         </label>
                         <div className="control has-icons-left">
                             <input
-                            className="input"
+                                className="input"
                                 type="email"
                                 id="email-address"
                                 value={email}
@@ -101,48 +97,61 @@ function Register() {
                             </span>
                         </div>
                     </div>
-                    
 
                     <div className="field">
-                        <label className="label" htmlFor="password">
-                            Contraseña
+                        <label className="label" htmlFor="tel">
+                            Telefono
                         </label>
-                        <div className='control has-icons-left'>
+                        <div className="control has-icons-left">
                             <input
-                            className="input" 
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)} 
-                            required                                 
-                            placeholder="Contraseña"              
+                                className="input"
+                                type="tel"
+                                id="tel"
+                                value={tel}
+                                onChange={(e) => setTel(e.target.value)}  
+                                required                                    
+                                placeholder="Telefono"                                
                             />
                             <span className="icon is-small is-left">
-                                <i className="fas fa-key"></i>
-                            </span>      
+                                <i className="fas fa-phone"></i>
+                            </span>
                         </div>
-                    </div>                                            
-                    
+                    </div>
+
                     <div className="field">
+                        <label className="label" htmlFor="regisNum">
+                            Matricula
+                        </label>
+                        <div className="control has-icons-left">
+                            <input
+                                className="input"
+                                type="text"
+                                id="regisNum"
+                                value={regisNum}
+                                onChange={(e) => setRegisNum(e.target.value)}  
+                                required                                    
+                                placeholder="Matricula"                                
+                            />
+                            <span className="icon is-small is-left">
+                                <i className="fas fa-graduation-cap"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="field is-grouped is-grouped-right">
                         <div className="control">
                             <input
                             className="button is-success"
                             type="submit" 
-                            onClick={onSubmit}
-                            value="Registrarse"                        
+                            value="Publicar"
                             />
                         </div>
-                    </div>                                
+                    </div>
                 </form>
-                <p>
-                    Ya tienes una cuenta?{' '}
-                    <Link to="/login" >
-                        Inicia Sesión
-                    </Link>
-                </p>                   
             </div>
+            <StudentList isSent={isSent} />
         </>
     )
 }
 
-export default Register;
+export default AddStudent;

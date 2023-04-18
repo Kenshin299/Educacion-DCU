@@ -1,10 +1,11 @@
+import AddStudent from "../components/AddStudent";
 import StudentList from "../components/StudentList";
 
 function MainPage() {
     return (
-        <div className="container hero is-halfheight">
-            <StudentList />
-        </div>
+        <>
+            <AddStudent />
+        </>
     )
 }
 

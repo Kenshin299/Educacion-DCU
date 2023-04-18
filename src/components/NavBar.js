@@ -14,7 +14,7 @@ function NavBar(props) {
     }
 
     return (
-            <nav className="navbar is-transparent" role="navigation" aria-label="main navigation">
+            <nav className="navbar is-light is-fixed-top" role="navigation" aria-label="main navigation">
             {!props.auth ? (
                 <>
                     <div className="navbar-brand">

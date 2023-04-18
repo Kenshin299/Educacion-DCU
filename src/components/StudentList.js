@@ -1,7 +1,34 @@
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import {db} from '../Firebase';
+import { useState, useEffect } from 'react';
+
+
 function StudentList(props) {
+    const [students, setStudents]= useState([]);
+    let i = 0;
+
+    const fetchStudents = async () => {
+        await getDocs(query(collection(db, "estudiantes"), orderBy("created", "asc")))
+            .then((querySnapshot)=>{               
+                const newData = querySnapshot.docs
+                    .map((doc) => ({...doc.data(), id:doc.id }));
+                setStudents(newData);                
+                console.log(newData);
+            }
+        ).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+        });
+    }
+
+    useEffect(()=>{
+        fetchStudents();
+    }, [props.isSent])
+
     return (
-        <div className="container">
-            <table className="table">
+        <div className="container box">
+            <table className="table is-hoverable is-fullwidth">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -10,17 +37,23 @@ function StudentList(props) {
                         <th>Correo</th>
                         <th>Telefono</th>
                         <th>Matricula</th>
+                        <th>Fecha de Registro</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>props.data.id</th>
-                        <td>props.data.nombre</td>
-                        <td>props.data.apellido</td>
-                        <td>props.data.correo</td>
-                        <td>props.data.telefono</td>
-                        <td>props.data.matricula</td>
-                    </tr>
+                        {
+                            students.map((student) => (
+                                <tr key={student.id}>
+                                    <th>{i = i + 1}</th>
+                                    <td>{student.name}</td>
+                                    <td>{student.lastName}</td>
+                                    <td>{student.email}</td>
+                                    <td>{student.tel}</td>
+                                    <td>{student.regisNum}</td>
+                                    <td>{student.created}</td>
+                                </tr>
+                            ))
+                        }
                 </tbody>
             </table>
         </div>

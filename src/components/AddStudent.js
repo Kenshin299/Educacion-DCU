@@ -3,12 +3,14 @@ import React, {useState} from "react";
 import { collection, addDoc } from "firebase/firestore";
 import {db} from '../Firebase';
 
-function AddStudent(props) {
-    const [name, setName]= useState("");
-    const [lastName, setLastName]= useState("");
-    const [email, setEmail]= useState("");
-    const [tel, setTel]= useState("");
-    const [regisNum, setRegisNum]= useState("");
+function AddStudent() {
+    const [name, setName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [tel, setTel] = useState("");
+    const [regisNum, setRegisNum] = useState("");
+    const [foto, setFoto] = useState("");
+    const [fotoName, setFotoName] = useState("");
     const [isSent, setIsSent] = useState(false);
     
     const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
@@ -32,6 +34,16 @@ function AddStudent(props) {
             setIsSent(prevCheck => !prevCheck);
         })
     };
+
+    const handleFoto = (e) => {
+        setFoto(e.target.value);
+        let fileName = "";
+        const fileInput = document.getElementById('foto');
+        if (fileInput.files.length > 0) {
+            fileName = fileInput.files[0].name;
+        }
+        document.getElementById('file-name').textContent = fileName;
+    }
     
     return (
         <>
@@ -118,7 +130,7 @@ function AddStudent(props) {
                         </div>
                     </div>
 
-                    <div className="field">
+                    <div id="file-foto" className="field">
                         <label className="label" htmlFor="regisNum">
                             Matricula
                         </label>
@@ -136,6 +148,30 @@ function AddStudent(props) {
                                 <i className="fas fa-graduation-cap"></i>
                             </span>
                         </div>
+                    </div>
+                    
+                    <div className="file has-name">
+                        <label className="file-label" htmlFor="foto">
+                            <input
+                                className="file-input"
+                                type="file"
+                                id="foto"
+                                onChange={handleFoto}
+                                accept="image/png, image/jpeg"  
+                                required                                                                  
+                            />
+                            <span className="file-cta">
+                                <span className="file-icon">
+                                    <i className="fas fa-upload"></i>
+                                </span>
+                                <span className="file-label">
+                                    Selecciona la foto...
+                                </span>
+                            </span>
+                            <span id="file-name" className="file-name">
+                                Vacio
+                            </span>
+                        </label>                            
                     </div>
 
                     <div className="field is-grouped is-grouped-right">

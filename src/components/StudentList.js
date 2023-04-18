@@ -18,7 +18,9 @@ function StudentList(props) {
                 setStudents(newData);                
                 console.log(newData);
             }).then(() => {
-                setTimeout(fetchPhotos, 2000);
+                students.map((student) => {
+                    fetchPhotos(student.photo);
+                })
             }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -26,11 +28,7 @@ function StudentList(props) {
         });
     }
 
-    const fetchPhotos = () => {
-        let photoName = "";
-        students.map((student) => {
-            photoName = student.photo;
-        })
+    const fetchPhotos = (photoName) => {
         let gsReference = ref(storage, `images/${photoName}`);
         // gs://educacion-dcu.appspot.com/images/
         getDownloadURL(gsReference)

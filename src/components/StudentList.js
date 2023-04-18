@@ -2,29 +2,23 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { db, storage } from '../Firebase';
 import { useState, useEffect } from 'react';
+import logo from "../img/Default.png"
 
 
 function StudentList(props) {
-    const [students, setStudents]= useState([]);
-    const [fotoUrl, setFotoUrl]= useState("");
+    const [students, setStudents] = useState([]);
+    const [fotoUrl, setFotoUrl] = useState(logo);
     let i = 0;
 
-    const fetchStudents = async () => {
-        await getDocs(query(collection(db, "estudiantes"), orderBy("created", "asc")))
-            .then((querySnapshot)=>{               
+    const fetchStudents = () => {
+        getDocs(query(collection(db, "estudiantes"), orderBy("created", "asc")))
+            .then((querySnapshot) => {               
                 const newData = querySnapshot.docs
                     .map((doc) => ({...doc.data(), id:doc.id }));
                 setStudents(newData);                
                 console.log(newData);
-            }).then(async () => {
-                const gsReference = ref(storage, `/images/${students.map((student) => student.photo)}`); 
-                // gs://educacion-dcu.appspot.com/images/
-                console.log(gsReference);
-                await getDownloadURL(gsReference)
-                    .then((url) => {
-                        setFotoUrl(url);
-                        console.log(url);
-                    })
+            }).then(() => {
+                setTimeout(fetchPhotos, 2000);
             }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -32,22 +26,23 @@ function StudentList(props) {
         });
     }
 
-    
-
-    // const fetchPhotos = async () => {
-    //     await getDownloadURL(gsReference)
-    //         .then((url) => {
-    //             setFotoUrl(url);
-    //             console.log(url);
-    //         }
-    //     ).catch((error) => {
-    //         console.error(error.message);
-    //     });
-    // }
+    const fetchPhotos = () => {
+        let photoName = "";
+        students.map((student) => {
+            photoName = student.photo;
+        })
+        let gsReference = ref(storage, `images/${photoName}`);
+        // gs://educacion-dcu.appspot.com/images/
+        getDownloadURL(gsReference)
+            .then((url) => {
+                setFotoUrl(url);
+                console.log(url);
+            });
+    }
 
     useEffect(() => {
         fetchStudents();
-        // fetchPhotos();
+    // eslint-disable-next-line
     }, [props.isSent]);
 
     return (
@@ -73,7 +68,7 @@ function StudentList(props) {
                                     <td>
                                         <div className="card">
                                             <div className="card-image">
-                                                <figure className="image is-48x48">
+                                                <figure className="image is-4by3">
                                                     <img src={fotoUrl} alt="Portrait"/>
                                                 </figure>
                                             </div>

@@ -2,6 +2,8 @@
 
 Creado utilizando React.js para el Frontend y Firebase para el Backend
 
+[PDF](Practica_FinalDCU.pdf)
+
 # Imagenes de la pagina
 
 ## Inicio de Sesion

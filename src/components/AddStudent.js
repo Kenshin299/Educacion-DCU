@@ -29,15 +29,22 @@ function AddStudent() {
         const fileInput = document.getElementById('foto');
         if (fileInput.files.length > 0) {
             fileName = fileInput.files[0].name;
+        } else {
+            alert("Subida Cancelada")
         }
         document.getElementById('file-name').textContent = fileName;
     };
 
     const handlePhotoUpload = async () => {
         const uploadTask = uploadBytesResumable(storageRef, foto);
-        uploadTask.on('state_changed',  (snapshot) => {
-            setPercent((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        });
+        uploadTask.on('state_changed',  
+            (snapshot) => {
+                setPercent((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            },
+            (error) => {
+                console.log("Subida cancelada: ", error);
+            }
+        );
         console.log(foto.name + ' uploaded');
     };
 
@@ -189,7 +196,7 @@ function AddStudent() {
                                     <i className="fas fa-upload"></i>
                                 </span>
                                 <span className="file-label">
-                                    Selecciona la foto...
+                                    Selecciona la foto
                                 </span>
                             </span>
                             <span id="file-name" className="file-name">

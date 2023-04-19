@@ -1,7 +1,8 @@
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { getDownloadURL, ref } from "firebase/storage";
-import { db, storage } from '../Firebase';
+
+import { db } from '../Firebase';
 import { useState, useEffect } from 'react';
+import Photo from "./Photo"
 import logo from "../img/Default.png"
 
 
@@ -17,25 +18,11 @@ function StudentList(props) {
                     .map((doc) => ({...doc.data(), id:doc.id }));
                 setStudents(newData);                
                 console.log(newData);
-            }).then(() => {
-                students.map((student) => {
-                    fetchPhotos(student.photo);
-                })
             }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
         });
-    }
-
-    const fetchPhotos = (photoName) => {
-        let gsReference = ref(storage, `images/${photoName}`);
-        // gs://educacion-dcu.appspot.com/images/
-        getDownloadURL(gsReference)
-            .then((url) => {
-                setFotoUrl(url);
-                console.log(url);
-            });
     }
 
     useEffect(() => {
@@ -64,13 +51,7 @@ function StudentList(props) {
                                 <tr key={student.id}>
                                     <th>{i = i + 1}</th>
                                     <td>
-                                        <div className="card">
-                                            <div className="card-image">
-                                                <figure className="image is-4by3">
-                                                    <img src={fotoUrl} alt="Portrait"/>
-                                                </figure>
-                                            </div>
-                                        </div>
+                                       <Photo url={student.photo} isSent={props.isSent}/> 
                                     </td>
                                     <td>{student.name}</td>
                                     <td>{student.lastName}</td>

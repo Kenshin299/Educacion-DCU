@@ -2,6 +2,9 @@ import { useNavigate ,Link } from "react-router-dom";
 import { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../Firebase';
+import { ToastContainer } from "react-toastify";
+import { failure } from "../components/ToastFunctions"
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Register() {
@@ -26,14 +29,13 @@ function Register() {
               }).catch((error) => {
                 console.log(error);
               });
-
               navigate('/login')
           })
           .catch((error) => {
               const errorCode = error.code;
               const errorMessage = error.message;
               console.log(errorCode, errorMessage);
-              alert("No se pudo crear su nueva cuenta: " + errorMessage);
+              failure("No se pudo crear su nueva cuenta: " + errorMessage);
           });
     }
 
@@ -141,6 +143,7 @@ function Register() {
                     </Link>
                 </p>                   
             </div>
+            <ToastContainer limit={1}/>
         </>
     )
 }

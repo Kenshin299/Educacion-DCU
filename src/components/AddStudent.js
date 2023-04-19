@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db, storage } from '../Firebase';
 import { ref, uploadBytesResumable } from "firebase/storage";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import { success, failure } from "./ToastFunctions";
 import 'react-toastify/dist/ReactToastify.css';
 
 function AddStudent() {
@@ -32,7 +33,7 @@ function AddStudent() {
         if (fileInput.files.length > 0) {
             fileName = fileInput.files[0].name;
         } else {
-            alert("Subida Cancelada")
+            failure("Debe seleccionar una imagen");
         }
         document.getElementById('file-name').textContent = fileName;
     };
@@ -44,7 +45,7 @@ function AddStudent() {
                 setPercent((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
             },
             (error) => {
-                console.log("Subida cancelada: ", error);
+                failure(error);
             }
         );
         console.log(foto.name + ' uploaded');
@@ -53,19 +54,6 @@ function AddStudent() {
     const resetBar = () => {
         document.getElementById('file-name').textContent = "Vacio";
         setPercent(0);
-    }
-
-    const success = (message) => {
-        toast.success(message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
     }
 
     const addNewStudent = async (e) => {
@@ -90,7 +78,7 @@ function AddStudent() {
             setTimeout(resetBar, 1000);
         }).then(() => {
             setTimeout(success("Enviado con exito"), 500);
-        }).catch((error) => success(error));
+        }).catch((error) => failure(error));
     };
     
     return (

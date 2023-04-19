@@ -3,6 +3,9 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
+import { ToastContainer } from "react-toastify";
+import { success, failure } from "../components/ToastFunctions";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
     const navigate = useNavigate();
@@ -22,7 +25,7 @@ function Login() {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
-            alert("Correo electronico o contraseña incorrecta");
+            failure("Correo electronico o contraseña incorrecta: " + errorMessage);
         });
     }
 
@@ -89,6 +92,7 @@ function Login() {
                     </Link>
                 </p>                   
             </div>
+            <ToastContainer limit={1}/>
         </>
     )
 }

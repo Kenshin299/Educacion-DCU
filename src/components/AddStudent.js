@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db, storage } from '../Firebase';
 import { ref, uploadBytesResumable } from "firebase/storage";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddStudent() {
     const [name, setName] = useState("");
@@ -53,6 +55,19 @@ function AddStudent() {
         setPercent(0);
     }
 
+    const success = (message) => {
+        toast.success(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    }
+
     const addNewStudent = async (e) => {
         e.preventDefault();
         const sendPost = await addDoc(collection(db, 'estudiantes'), {
@@ -73,7 +88,9 @@ function AddStudent() {
             console.log(foto);
             setIsSent(prevCheck => !prevCheck);
             setTimeout(resetBar, 1000);
-        });
+        }).then(() => {
+            setTimeout(success("Enviado con exito"), 500);
+        }).catch((error) => success(error));
     };
     
     return (
@@ -227,6 +244,7 @@ function AddStudent() {
                     </div>
                 </form>
             </div>
+            <ToastContainer limit={1}/>
             <StudentList isSent={isSent} />
         </>
     )

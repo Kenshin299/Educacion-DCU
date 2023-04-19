@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from 'react';
-import { auth } from './Firebase';
+import { auth } from './Firebase';;
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);

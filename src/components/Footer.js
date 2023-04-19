@@ -9,7 +9,7 @@ function Footer() {
                     Wander Alexis Bautista García - 2021-2444 <br/>
                     Jan Carlos Gutiérrez 2021-1843 - <br/>
                     <a href="https://github.com/Kenshin299/Educacion-DCU" target="_blank" rel="noreferrer"> 
-                        <i class="fa-brands fa-github"/> Link de github 
+                        <i className="fa-brands fa-github"/> Link de github 
                     </a>
                 </p>
             </div>

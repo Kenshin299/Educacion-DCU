@@ -11,6 +11,7 @@ export const success = (message) => {
         progress: undefined,
         theme: "light",
     });
+    toast.clearWaitingQueue();
 }
 
 export const failure = (message) => {
@@ -24,4 +25,5 @@ export const failure = (message) => {
         progress: undefined,
         theme: "light",
     });
+    toast.clearWaitingQueue();
 }

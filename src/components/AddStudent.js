@@ -6,6 +6,7 @@ import { ref, uploadBytesResumable } from "firebase/storage";
 import { ToastContainer } from "react-toastify";
 import { success, failure } from "./ToastFunctions";
 import 'react-toastify/dist/ReactToastify.css';
+import { FormatPhoneNumber, FormatRegisNumber } from "./GenericFunctions";
 
 function AddStudent() {
     const [name, setName] = useState("");
@@ -19,10 +20,6 @@ function AddStudent() {
     
     const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
     let date = new Date().toLocaleDateString('es-ES', options);
-
-    // const handleTitleChange = (e) => {
-    //     setPostTitle(e.target.value);
-    // };
 
     const storageRef = ref(storage, `/images/${foto.name}`);
 
@@ -156,7 +153,12 @@ function AddStudent() {
                                 type="tel"
                                 id="tel"
                                 value={tel}
-                                onChange={(e) => setTel(e.target.value)}  
+                                onChange={(e) => {
+                                    e.target.value = FormatPhoneNumber(e.target.value);
+                                    setTel(e.target.value);
+                                }}
+                                maxLength={14}
+                                pattern="[0-9]+"
                                 required                                    
                                 placeholder="Telefono"                                
                             />
@@ -176,8 +178,13 @@ function AddStudent() {
                                 type="text"
                                 id="regisNum"
                                 value={regisNum}
-                                onChange={(e) => setRegisNum(e.target.value)}  
-                                required                                    
+                                onChange={(e) => {
+                                    e.target.value = FormatRegisNumber(e.target.value);
+                                    setRegisNum(e.target.value);
+                                }}
+                                maxLength={9}
+                                pattern="[0-9]+-"
+                                required                                   
                                 placeholder="Matricula"                                
                             />
                             <span className="icon is-small is-left">
@@ -224,9 +231,9 @@ function AddStudent() {
                     <div className="field is-grouped is-grouped-right">
                         <div className="control">
                             <input
-                            className="button is-success"
-                            type="submit" 
-                            value="Publicar"
+                                className="button is-success"
+                                type="submit" 
+                                value="Publicar"
                             />
                         </div>
                     </div>

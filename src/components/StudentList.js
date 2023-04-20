@@ -1,18 +1,18 @@
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
-
 import { db } from '../Firebase';
 import { useState, useEffect } from 'react';
-import Photo from "./Photo"
-import logo from "../img/Default.png"
-
+import Photo from "./Photo";
+import SearchStudent from "./SearchStudent";
 
 function StudentList(props) {
     const [students, setStudents] = useState([]);
-    const [fotoUrl, setFotoUrl] = useState(logo);
     let i = 0;
 
-    const fetchStudents = () => {
-        getDocs(query(collection(db, "estudiantes"), orderBy("created", "asc")))
+     const fetchStudents = async (e) => {
+        if (e && e.preventDefault) {
+            e.preventDefault(); 
+        }
+        await getDocs(query(collection(db, "estudiantes"), orderBy("created", "asc")))
             .then((querySnapshot) => {               
                 const newData = querySnapshot.docs
                     .map((doc) => ({...doc.data(), id:doc.id }));
@@ -32,10 +32,11 @@ function StudentList(props) {
 
     return (
         <div className="container box">
+            <SearchStudent students={students}/>
             <table className="table is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No.</th>
                         <th>Foto</th>
                         <th>Nombre</th>
                         <th>Apellido</th>

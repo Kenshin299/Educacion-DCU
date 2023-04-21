@@ -66,9 +66,9 @@ function Searchstudent(props) {
                                     </div>
                                 </div>
                                 <div className="content">
-                                    <p>Correo Electronico: {student.email}</p>
-                                    <p>Numero de Telefono: {student.tel}</p>
-                                    <p>Fecha de Registro: {student.created}</p>
+                                    <p><strong>Correo Electronico:</strong> {student.email}</p>
+                                    <p><strong>Numero de Telefono:</strong> {student.tel}</p>
+                                    <p><strong>Fecha de Registro:</strong> {student.created}</p>
                                 </div>
                             </div>
                         </div>    

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormatRegisNumber } from "./GenericFunctions";
 import { ToastContainer } from "react-toastify";
 import { failure } from "./ToastFunctions";
@@ -7,23 +7,22 @@ import SearchResult from "./SearchResult";
 function SearchStudent(props) {
     const [search, setSearch] = useState("");
     const [show, setShow] = useState(false);
-    const [student, setStudent] = useState([]);
-
-    const mapRegis = () => {
-        props.students.map((student) => {
-            setStudent(student.regisNum);
-        })
-    }
+    const [students, setStudent] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        mapRegis();
-        if (student.includes(search)) {
-            setShow(true);
+        if (students.map((res) => res.regisNum).includes(search)) {
+            setShow(prevCheck => !prevCheck);
         } else {
-            failure(`No existe estudiante con la matricula: ${search}`)
+            failure(`No existe estudiante con la matricula: ${search}`);
         }
     };
+
+    useEffect(() => {
+        setStudent(props.students);
+    // eslint-disable-next-line
+    }, [props.students]);
+
 
     return (
         <>
@@ -40,7 +39,7 @@ function SearchStudent(props) {
                                 setSearch(e.target.value);
                             }}
                             maxLength={9}
-                            pattern="[0-9+-]+"
+                            pattern="[0-9]{4}-[0-9]{4}"
                             required                                    
                             placeholder="Matricula"
                             />
@@ -52,8 +51,7 @@ function SearchStudent(props) {
                     </div>
                 </div>
             </form>
-            <ToastContainer limit={1} />
-            <SearchResult show={show} search={search}/>
+            <SearchResult show={show} search={search} students={students}/>
         </>
     )
 }

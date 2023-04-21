@@ -2,17 +2,22 @@ import { useState, useEffect } from 'react';
 
 function SearchResult(props) {
 
-    const [isActive, setIsActive] = useState();
-    
+    const [isActive, setIsActive] = useState(false);
+    const [students, setStudents] = useState([]);
 
     useEffect(() => {
-        setIsActive(props.show);
+        if (props.search === "") {
+            setIsActive(false);
+        } else {
+            setIsActive(true);
+        }
+    // eslint-disable-next-line
     }, [props.show]);
 
     return (
         <>
-        <div id="studentModal" className={`modal ${isActive ? "is-active" : ""}`}>
-            <div className="modal-background"></div>
+        <div id="studentModal" className={`modal ${isActive ? "is-active " : ""}`}>
+            <div className="modal-background" onClick={() => setIsActive(false)}></div>
             <div className="modal-content">
 
                 <div className="card">
@@ -38,13 +43,13 @@ function SearchResult(props) {
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             Phasellus nec iaculis mauris.
                             <br/>
-                            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                            <time dateTime="2016-1-1">11:09 PM - 1 Jan 2016</time>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <button className="modal-close is-large" aria-label="close"></button>
+            <button className="modal-close is-large" aria-label="close" onClick={() => setIsActive(false)}></button>
         </div>
         </>
     )

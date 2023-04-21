@@ -158,7 +158,7 @@ function AddStudent() {
                                     setTel(e.target.value);
                                 }}
                                 maxLength={14}
-                                pattern="[0-9]+"
+                                pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}"
                                 required                                    
                                 placeholder="Telefono"                                
                             />
@@ -183,7 +183,7 @@ function AddStudent() {
                                     setRegisNum(e.target.value);
                                 }}
                                 maxLength={9}
-                                pattern="[0-9]+-"
+                                pattern="[0-9]{4}-[0-9]{4}"
                                 required                                   
                                 placeholder="Matricula"                                
                             />

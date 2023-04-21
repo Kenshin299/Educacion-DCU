@@ -49,7 +49,7 @@ function Searchstudent(props) {
                     student.map((student) => (
                         <div className="card" key={student.id}>
                             <div className="card-image">
-                                <figure class="image">
+                                <figure className="image">
                                     <Photo url={student.photo} />
                                 </figure>
                             </div>

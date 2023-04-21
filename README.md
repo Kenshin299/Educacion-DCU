@@ -26,6 +26,11 @@ Creado utilizando React.js para el Frontend y Firebase para el Backend
 
 ![Quinta Captura de Pantalla](/src/img/Educacion5.png)
 
+## Busqueda de un Estudiante
+
+![Sexta Captura de Pantalla](/src/img/Educacion6.png)
+![Septima Captura de Pantalla](/src/img/Educacion7.png)
+
 # Available Scripts
 
 In the project directory, you can run:

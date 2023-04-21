@@ -22,13 +22,10 @@ function Photo(props) {
     }, [props.isSent]);
  
     return (
-        <div className="card">
-            <div className="card-image">
-                <figure className="image is-4by3">
-                    <img src={foto} alt="Portrait"/>
-                </figure>
-            </div>
-        </div>
+        <>
+        <img src={foto} alt="Portrait"/>
+        </>
+        
     )
 }
 

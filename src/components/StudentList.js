@@ -33,26 +33,33 @@ function StudentList(props) {
     return (
         <div className="container box">
             <SearchStudent students={students}/>
-            <table className="table is-hoverable is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Foto</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Correo</th>
-                        <th>Telefono</th>
-                        <th>Matricula</th>
-                        <th>Fecha de Registro</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div className="table-container">
+                <table className="table is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Foto</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Correo</th>
+                            <th>Telefono</th>
+                            <th>Matricula</th>
+                            <th>Fecha de Registro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {
                             students.map((student) => (
                                 <tr key={student.id}>
                                     <th>{i = i + 1}</th>
                                     <td>
-                                       <Photo url={student.photo} isSent={props.isSent}/> 
+                                        <div className="card">
+                                            <div className="card-image">
+                                                <figure className="image is-4by3">
+                                                    <Photo url={student.photo} />
+                                                </figure>
+                                            </div>
+                                        </div>                                    
                                     </td>
                                     <td>{student.name}</td>
                                     <td>{student.lastName}</td>
@@ -63,9 +70,10 @@ function StudentList(props) {
                                 </tr>
                             ))
                         }
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+        </div> 
     )
 }
 

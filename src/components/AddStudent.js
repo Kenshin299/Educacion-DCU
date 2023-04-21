@@ -27,12 +27,17 @@ function AddStudent() {
         setFoto(e.target.files[0]);
         let fileName = "";
         const fileInput = document.getElementById('foto');
-        if (fileInput.files.length > 0) {
-            fileName = fileInput.files[0].name;
-        } else {
+        try {
+            if (fileInput.files.length > 0) {
+                fileName = fileInput.files[0].name;
+            } else {
+                failure("Debe seleccionar una imagen");
+            }
+            document.getElementById('file-name').textContent = fileName;
+        } catch (e) {
             failure("Debe seleccionar una imagen");
         }
-        document.getElementById('file-name').textContent = fileName;
+       
     };
 
     const handlePhotoUpload = async () => {

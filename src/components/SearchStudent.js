@@ -20,7 +20,7 @@ function SearchStudent(props) {
 
     useEffect(() => {
         setStudent(props.students);
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.students]);
 
 

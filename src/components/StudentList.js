@@ -27,7 +27,7 @@ function StudentList(props) {
 
     useEffect(() => {
         fetchStudents();
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.isSent]);
 
     return (

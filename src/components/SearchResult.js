@@ -7,15 +7,7 @@ function Searchstudent(props) {
     const [studentsList, setStudentsList] = useState(props.students);
     const [student, setStudent] = useState([]);
 
-    // const fetchStudentData = async () => {
-    //     const studentsRef = db.collection("estudiantes");
-    //     const q = await studentsRef.where("regisNum", "==", `${props.search}`).get()
-    //     .then(setStudents(q));
-    // }
-
     const resultStudent = () => {
-        
-        // studentsList.map((res) => res.regisNum).includes(props.search);
         const result = studentsList.filter(res => res.regisNum == props.search);
         setStudent(result);
     }
@@ -37,7 +29,7 @@ function Searchstudent(props) {
             setIsActive(true);
             document.getElementById("html").classList.add("is-clipped");
         }
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.show]);
 
     return (

@@ -1,8 +1,6 @@
 # Web de Educacion para el registro y seguimiento de datos del Estudiante
 
-Creado utilizando React.js para el Frontend y Firebase para el Backend
-
-[PDF](Practica_FinalDCU.pdf)
+Creado utilizando React, la libreria bulma (CSS) y Firebase
 
 # Imagenes de la pagina
 
